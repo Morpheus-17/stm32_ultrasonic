@@ -1,0 +1,30 @@
+교육 내용 정리]
+- MAX232 Maxim사에서 개발한 232 통신용 IC (Analog Device 에서 인수)
+- MAX232 내부의 Inverter는  Input/output Clipper Diode OPAMP Comparator Circuit으로 구성되어 있다. 
+- MAX232 내부에는 Voltaga Doubler가 존재하기 때문에 차동신호를 -5V~+5V, -10V~+10V를  생성할 수 있다.
+- HC-SR04 초음파 센서에 구성된 MAX232는 TTL 신호를 Differential 신호로 바꿔서 발진기에 공진주파수를 이용해 40kHz 초음파를 생성하도록 응용되었다.
+- 그리고 이를 수신하기 위한 Tranducer로 초음파를 수신하도록 회로가 구성되었다.
+- 어탐지기는 초음파신호를 SONAR라고 한다
+- 초음파로 반사되어 오는 신호의 세기가 크면 물체의 크기가 크고,
+- 초음파로 반사되어 오는 신호의 종류가 많으면 물체가 많이 있다고 판단 한다.
+- TUSS4470 내부에는 초음파센서가 여러개 들어있어서 물체의 크기, 개수, 이를통한 방향 감지가 가능하다
+- 이를 위해서 Timer 기능의 Capture 기능을 이용해보자
+
+- timer3 capture 모드 (Label:Echo)
+	.Prescailer=16-1  1MHz  = 1us 주기를 갖는다
+	.Input Capture Channel2  셋팅은 건들지 않는다 (default=rising edge)
+	.NVIC Settings TIM3 global interrup 를 Enabled 하면 rising edge에서 인터럽트가 발생한다
+	 (Echo로 넘오오는 신호를 카운트하기 위함이다)
+
+- timer11 1us 단위로 딜레이를 구현하기 위해서
+	.Prescailer=16-1  1MHz  = 1us 주기를 갖는다
+- PA7 
+	.TIM1_CH1N (Negative로 동작하겠다는 의미)
+	.TIM3_CH2 (따라서 TIM3을 사용한다)
+
+- PA6 (Label:Trigger)
+	.
+
+-USART2 
+	.Asynchronous 
+	.키보드입력 안받음
